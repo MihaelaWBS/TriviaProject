@@ -5,12 +5,27 @@ import "./App.css";
 
 function App() {
 	const [quizQuestions, setQuizQuestions] = useState(questions);
+	const [selectedAnswers, setSelectedAnswers] = useState({});
 
+	const handleAnswerSelect = (questionId, answer) => {
+		setSelectedAnswers({...selectedAnswers, [questionId]: answer});
+
+	};
+		
+
+		
+
+ 
 	return (
 		<>
 			<main>
 				{questions.map((x) => (
-					<Questions key={x.id} quizQuestions={x} />
+					<Questions 
+					 key={x.id}
+					 quizQuestions={x} 
+					 selectedAnswer = {selectedAnswers[x.id]}
+					 onAnswerSelect={handleAnswerSelect}
+					 />
 				))}
 			</main>
 		</>
