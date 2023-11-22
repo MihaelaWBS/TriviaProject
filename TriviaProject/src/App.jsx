@@ -10,7 +10,7 @@ function App() {
 		<>
 			<main>
 				{questions.map((x) => (
-					<Questions key={x.id} quizQuestions={quizQuestions} />
+					<Questions key={x.id} quizQuestions={x} />
 				))}
 			</main>
 		</>

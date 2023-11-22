@@ -1,0 +1,29 @@
+.question-container {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 30px;
+	margin: 30px;
+	font-size: 1.2rem;
+	color: azure;
+	font-weight: 600;
+}
+
+body {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: #413e42;
+}
+
+.button-container {
+	padding: 0.5rem;
+	cursor: pointer;
+	border-radius: 10px;
+	font-size: 1rem;
+	margin-bottom: 30px;
+}
+
+.button-container:hover {
+	background-color: rgb(46, 163, 46);
+}
