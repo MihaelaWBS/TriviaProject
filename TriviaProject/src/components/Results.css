@@ -19,7 +19,7 @@
 	border: 1px solid #eaeaea;
 	padding: 10px;
 	margin-bottom: 10px;
-	border-radius: 4px;
+	border-radius: 10px;
 }
 
 .question-text {
@@ -42,6 +42,19 @@
 	margin-top: 20px;
 }
 
+/*
 .your-answer {
 	color: red;
+}  */
+
+.correct-answer {
+	color: #4caf50;
+}
+
+.yourAnswer-correct {
+    color: #4caf50;
+}
+
+.yourAnswer-incorrect {
+color: red;
 }
