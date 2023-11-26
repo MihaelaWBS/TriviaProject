@@ -3,6 +3,10 @@ import Answers from "./Answers";
 import "./Questions.css";
 
 const Questions = ({ quizQuestions, selectedAnswer, onAnswerSelect }) => {
+	if (!quizQuestions) {
+		return <div>Loading...</div>;
+	}
+
 	return (
 		<div>
 			<div className="question-container">{quizQuestions.question}</div>
