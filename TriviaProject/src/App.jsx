@@ -4,10 +4,11 @@ import Questions from "./components/Questions";
 import "./App.css";
 // Removed the unused import 'axios'
 import Results from "./components/Results";
+import { v4 as uuidv4 } from "uuid";
 
 function App() {
 	const [quizQuestions, setQuizQuestions] = useState([]);
-	const [selectedAnswers, setSelectedAnswers] = useState({});
+	const [selectedAnswers, setSelectedAnswers] = useState([]);
 	const [quizOver, setQuizOver] = useState(false);
 	const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
 	const [showResults, setShowResults] = useState(false);
@@ -23,74 +24,47 @@ function App() {
 			setShowResults(true);
 		}
 	};
-
-	const url =
-		"https://opentdb.com/api.php?amount=10&category=9&difficulty=medium&type=multiple";
-
-	//Use effect ours start
-	/*    useEffect(() => {
-        fetch(url)
-          .then((res) => {
-            if (!res.ok) {
-              throw new Error('Network response was not ok');
-            }
-            return res.json();
-          })
-          .then((data) => {
-            // Process each question from the API
-            const processedQuestions = data.results.map((item, index) => ({
-              ...item,
-              id: index, // Adding a unique ID
-              question: unEscape(item.question), // Unescaping HTML entities in the question
-              answers: shuffleAnswers(item.correct_answer, item.incorrect_answers) // Shuffling answers
-            }));
-            setQuizQuestions(processedQuestions);
-          })
-          .catch((error) => console.error('There was a problem with the fetch operation:', error));
-      }, []); */
-
-	//Use effect ours end
-
-	//useeffect solution start
 	useEffect(() => {
-		const fetchData = (retryCount = 0) => {
-			fetch(url)
-				.then((res) => {
-					if (!res.ok) {
-						// If status is 429, wait and retry
-						if (res.status === 429 && retryCount < 5) {
-							setTimeout(
-								() => fetchData(retryCount + 1),
-								Math.pow(2, retryCount) * 1000
-							);
-							return;
-						}
-						throw new Error("Network response was not ok");
-					}
-					return res.json();
-				})
-				.then((data) => {
-					if (data) {
-						const processedQuestions = data.results.map((item, index) => ({
-							...item,
-							id: index,
-							question: unEscape(item.question),
-							answers: shuffleAnswers(
-								item.correct_answer,
-								item.incorrect_answers
-							),
-						}));
-						setQuizQuestions(processedQuestions);
-					}
-				})
-				.catch((error) => {
-					console.error("There was a problem with the fetch operation:", error);
-				});
+		const fetchData = async () => {
+			try {
+				const response = await fetch(url);
+				if (!response.ok) {
+					throw new Error("Network response was not ok");
+				}
+				const data = await response.json();
+				const processedQuestions = data.results.map((item) => ({
+					...item,
+					id: uuidv4(),
+					question: unEscape(item.question),
+					answers: shuffleAnswers(item.correct_answer, item.incorrect_answers),
+				}));
+				setQuizQuestions(processedQuestions);
+				localStorage.setItem(
+					"selectedAnswers",
+					JSON.stringify(selectedAnswers)
+				);
+			} catch (error) {
+				console.error("Error fetching quiz data:", error);
+			}
 		};
-		fetchData();
+
+		const storedQuestions = localStorage.getItem("quizQuestions");
+		const storedAnswers = localStorage.getItem("selectedAnswers");
+
+		if (storedQuestions) {
+			setQuizQuestions(JSON.parse(storedQuestions));
+		} else {
+			fetchData();
+		}
+
+		if (storedAnswers) {
+			setSelectedAnswers(JSON.parse(storedAnswers));
+		}
 	}, []);
 
-	//useeffect solution end
+	
+	const url =
+		"https://opentdb.com/api.php?amount=10&category=9&difficulty=medium&type=multiple";
 
 	const handleAnswerSelect = (question, answer) => {
 		setSelectedAnswers((prevAnswers) => ({
@@ -99,13 +73,9 @@ function App() {
 		}));
 	};
 
-	useEffect(() => {
-		if (Object.keys(selectedAnswers).length === quizQuestions.length) {
-			setQuizOver(true);
-		}
-	}, [selectedAnswers, quizQuestions.length]);
 
-	/* const restartQuiz = () => {
+
+	const restartQuiz = () => {
 		setSelectedAnswers({});
 		setQuizOver(false);
 	};
@@ -119,33 +89,33 @@ function App() {
 			/>
 		);
 	}
- */
+
 	return (
 		<main>
 			{showResults ? (
 				<Results
 					questions={quizQuestions}
 					answers={selectedAnswers}
-					/* onRestart={restartQuiz} */
+					onRestart={restartQuiz}
 				/>
-			) : (
-
+			) : quizQuestions.length > 0 &&
+			  currentQuestionIndex < quizQuestions.length ? (
 				<Questions
 					key={quizQuestions[currentQuestionIndex].id}
 					quizQuestions={quizQuestions[currentQuestionIndex]}
-					selectedAnswer={selectedAnswers[quizQuestions[currentQuestionIndex].id] || null}
+					selectedAnswer={
+						selectedAnswers[quizQuestions[currentQuestionIndex].id] || null
+					}
 					onAnswerSelect={handleAnswerSelect}
 				/>
-
-				/* 
-				<Questions
-					key={quizQuestions[currentQuestionIndex]}
-					quizQuestions={quizQuestions[currentQuestionIndex]}
-					selectedAnswer={selectedAnswers[quizQuestions[currentQuestionIndex]]}
-					onAnswerSelect={handleAnswerSelect}
-				/>  */
+			) : (
+				<div>Loading or no questions available...</div>
 			)}
-			<button onClick={goToNextQuestion}>NEXT QUESTION</button>
+			{!showResults &&
+				quizQuestions.length > 0 &&
+				currentQuestionIndex < quizQuestions.length && (
+					<button onClick={goToNextQuestion}>NEXT QUESTION</button>
+				)}
 		</main>
 	);
 }
