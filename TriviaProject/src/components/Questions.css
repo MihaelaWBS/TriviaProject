@@ -5,8 +5,8 @@
 	justify-content: center;
 	gap: 30px;
 	margin: 30px;
-	font-size: 1.2rem;
-	color: azure;
+	font-size: 1.4rem;
+
 	font-weight: 600;
 }
 
@@ -18,13 +18,98 @@ body {
 }
 
 .button-container {
-	padding: 0.5rem;
-	cursor: pointer;
+	width: 200px;
+	height: 50px;
+	background: rgba(255, 255, 255, 0.4);
+	backdrop-filter: blur(10px);
+	-webkit-backdrop-filter: blur(10px);
+	border: 1px solid rgba(255, 255, 255, 0.3);
 	border-radius: 10px;
-	font-size: 1rem;
-	margin-bottom: 30px;
+	padding: 20px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
+	position: relative;
+	z-index: 1;
+	overflow: hidden;
+	transition: box-shadow 0.2s, transform 0.2s;
 }
 
-.button-container:hover {
-	background-color: rgb(46, 163, 46);
+.button-container:active {
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+	transform: translateY(6px);
+}
+
+.button-container::after {
+	content: "";
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	transition: all 0.5s ease-in-out;
+	background-color: #febe10;
+	border-radius: 20px;
+	visibility: hidden;
+	height: 10px;
+	width: 10px;
+	z-index: -1;
+}
+
+.button-container:hover::after {
+	visibility: visible;
+	transform: scale(100) translateX(2px);
+}
+
+.restart-button {
+	background: #51c1e9 !important;
+	backdrop-filter: blur(10px) !important;
+	-webkit-backdrop-filter: blur(10px) !important;
+	border: 1px solid rgba(255, 255, 255, 0.3) !important;
+	border-radius: 10px !important;
+	padding: 20px !important;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2) !important;
+	color: black !important;
+}
+
+.loader {
+	margin-top: 350px;
+	position: relative;
+	width: 180px;
+	height: 180px;
+	overflow: hidden;
+	border-radius: 50%;
+	animation: circleAnimation 1s linear infinite;
+}
+
+.loader::before,
+.loader::after {
+	content: "";
+	position: absolute;
+}
+
+.loader::before {
+	inset: 10px;
+	background: rgba(233, 30, 99, 0.05);
+	border-radius: 50%;
+	backdrop-filter: blur(10px);
+	border: 1px solid rgba(255, 255, 255, 0.1);
+	z-index: 1;
+}
+
+.loader::after {
+	top: -50%;
+	left: -50%;
+	width: 100%;
+	height: 100%;
+	background: #51c1e9;
+}
+
+@keyframes circleAnimation {
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(360deg);
+	}
 }

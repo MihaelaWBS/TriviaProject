@@ -23,12 +23,18 @@
 }
 
 .question-text {
-	font-weight: bold;
+	font-family: Poppins;
+	font-weight: 400;
 }
 
 .correct-answer,
 .your-answer {
 	margin: 5px 0;
+	font-family: Poppins;
+}
+
+.yourAnswer-incorrect {
+	font-family: Poppins;
 }
 
 .restart-button {
@@ -43,18 +49,18 @@
 }
 
 /*
-.your-answer {
-	color: red;
-}  */
+  .your-answer {
+	  color: red;
+  }  */
 
 .correct-answer {
 	color: #4caf50;
 }
 
 .yourAnswer-correct {
-    color: #4caf50;
+	color: #4caf50;
 }
 
 .yourAnswer-incorrect {
-color: red;
+	color: red;
 }

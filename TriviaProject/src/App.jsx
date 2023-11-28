@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
-// Removed the unused import 'questions'
+import { AnimatePresence, motion } from "framer-motion";
+
 import Questions from "./components/Questions";
 import "./App.css";
-// Removed the unused import 'axios'
-import Results from "./components/Results";
+
+import Results from "./components/Results"; 
 import { v4 as uuidv4 } from "uuid";
+import Loader from "./components/Loader";
 
 function App() {
 	const [quizQuestions, setQuizQuestions] = useState([]);
@@ -24,6 +26,11 @@ function App() {
 			setShowResults(true);
 		}
 	};
+
+	const goToPreviousQuestion = () => {
+		setCurrentQuestionIndex(currentQuestionIndex - 1);
+	};
+
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
@@ -62,7 +69,6 @@ function App() {
 		}
 	}, []);
 
-	
 	const url =
 		"https://opentdb.com/api.php?amount=10&category=9&difficulty=medium&type=multiple";
 
@@ -73,50 +79,69 @@ function App() {
 		}));
 	};
 
-
-
 	const restartQuiz = () => {
-		setSelectedAnswers({});
-		setQuizOver(false);
+		location.reload();
 	};
 
 	if (quizOver) {
 		return (
+			<>
 			<Results
 				questions={quizQuestions}
 				answers={selectedAnswers}
 				onRestart={restartQuiz}
 			/>
+			<Loader/>
+			</>
+			
 		);
 	}
 
 	return (
 		<main>
-			{showResults ? (
-				<Results
-					questions={quizQuestions}
-					answers={selectedAnswers}
-					onRestart={restartQuiz}
-				/>
-			) : quizQuestions.length > 0 &&
-			  currentQuestionIndex < quizQuestions.length ? (
-				<Questions
-					key={quizQuestions[currentQuestionIndex].id}
-					quizQuestions={quizQuestions[currentQuestionIndex]}
-					selectedAnswer={
-						selectedAnswers[quizQuestions[currentQuestionIndex].id] || null
-					}
-					onAnswerSelect={handleAnswerSelect}
-				/>
-			) : (
-				<div>Loading or no questions available...</div>
-			)}
-			{!showResults &&
-				quizQuestions.length > 0 &&
-				currentQuestionIndex < quizQuestions.length && (
-					<button onClick={goToNextQuestion}>NEXT QUESTION</button>
-				)}
-		</main>
+      {showResults ? (
+        <Results
+          questions={quizQuestions}
+          answers={selectedAnswers}
+          onRestart={restartQuiz}
+        />
+      ) : quizQuestions.length > 0 &&
+        currentQuestionIndex < quizQuestions.length ? (
+        <Questions
+          key={quizQuestions[currentQuestionIndex].id}
+          quizQuestions={quizQuestions[currentQuestionIndex]}
+          selectedAnswer={
+            selectedAnswers[quizQuestions[currentQuestionIndex].id] || null
+          }
+          onAnswerSelect={handleAnswerSelect}
+        />
+      ) : (
+        <div className="loader"></div>
+      )}
+      {!showResults &&
+        quizQuestions.length > 0 &&
+        currentQuestionIndex < quizQuestions.length && (
+          <>
+            <button className="next-question-button" onClick={goToNextQuestion}>
+              NEXT QUESTION
+            </button>
+            {currentQuestionIndex > 0 && (
+              <button
+                className="previous-question-button"
+                onClick={goToPreviousQuestion}
+              >
+                PREVIOUS QUESTION
+              </button>
+            )}
+            <button
+              className="restart-quiz-button"
+              onClick={restartQuiz}
+            >
+              RESTART QUIZ 🤯
+            </button>
+          </>
+        )}
+    </main>
 	);
 }
 
