@@ -6,6 +6,7 @@ import Lottie from "lottie-react";
 import congratsAnimation from "../assets/congratsAnimation.json";
 import owl1 from "../assets/owl-hooting-48028.mp3";
 import thankYou from "../assets/thankYou.mp3";
+import simpleThingy from "../assets/simpleThingy.mp3";
 
 const Results = ({ questions, answers, onRestart }) => {
   console.log("Questions:", questions);
@@ -47,6 +48,10 @@ const Results = ({ questions, answers, onRestart }) => {
     new Audio(thankYou).play();
   };
 
+  const simpleThingy1 = () => {
+    new Audio(simpleThingy).play();
+  };
+
   const score = calculateScore();
 
   return (
@@ -59,10 +64,6 @@ const Results = ({ questions, answers, onRestart }) => {
           left: "15.5%",
         }}
       />
-      {/*  <Lottie
-        animationData={congratsAnimation}
-        style={{ width: "400px", position: "absolute", right: "15.5%" }}
-      /> */}
       <div
         onClick={playSound}
         style={{
@@ -89,7 +90,7 @@ const Results = ({ questions, answers, onRestart }) => {
         }}
       ></div>
       <div
-        onClick={playSound}
+        onClick={simpleThingy1}
         style={{
           position: "absolute",
           top: "14%",
