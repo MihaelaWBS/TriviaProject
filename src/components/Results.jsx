@@ -68,11 +68,12 @@ const Results = ({ questions, answers, onRestart }) => {
         onClick={playSound}
         style={{
           position: "absolute",
-          top: "20%",
+          top: "25%",
           left: "19.5%",
           zIndex: "1000",
 
           padding: "2rem",
+          paddingTop: "4rem",
           fontSize: "32px",
           display: "hidden",
         }}
@@ -81,10 +82,10 @@ const Results = ({ questions, answers, onRestart }) => {
         onClick={thankYouFin}
         style={{
           position: "absolute",
-          top: "18%",
+          top: "26%",
           left: "24%",
           zIndex: "1000",
-
+          paddingTop: "64px",
           padding: "2rem",
           fontSize: "26px",
         }}
@@ -92,12 +93,13 @@ const Results = ({ questions, answers, onRestart }) => {
       <div
         onClick={simpleThingy1}
         style={{
+          border: "1px solid red",
           position: "absolute",
-          top: "14%",
+          top: "24%",
           left: "29%",
           paddingBottom: "15px",
           zIndex: "1000",
-
+          paddingTop: "4rem",
           padding: "2rem",
           fontSize: "26px",
         }}
