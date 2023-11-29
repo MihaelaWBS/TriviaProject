@@ -1,17 +1,17 @@
 import React from "react";
-import "./Results.css"; // Import the CSS file
+import "./Results.css";
 import { motion } from "framer-motion";
 import finishAnimation from "../assets/finishAnimation.json";
 import Lottie from "lottie-react";
 import congratsAnimation from "../assets/congratsAnimation.json";
+import owl1 from "../assets/owl-hooting-48028.mp3";
+
 const Results = ({ questions, answers, onRestart }) => {
-  // Add console logs to check the questions and answers data
   console.log("Questions:", questions);
   console.log("Answers:", answers);
 
   const calculateScore = () => {
     return questions.reduce((score, question) => {
-      // Add a console log inside the reduce function to check each question and answer
       console.log("Current Question:", question);
       console.log("User Answer:", answers[question.id]);
       console.log("Correct Answer:", question.correct_answer);
@@ -38,11 +38,16 @@ const Results = ({ questions, answers, onRestart }) => {
     },
   };
 
+  const playSound = () => {
+    new Audio(owl1).play();
+  };
+
   const score = calculateScore();
 
   return (
     <div className="results-container">
       <Lottie
+        onClick={playSound}
         animationData={finishAnimation}
         style={{ width: "400px", position: "absolute", left: "15.5%" }}
       />
