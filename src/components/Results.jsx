@@ -5,6 +5,7 @@ import finishAnimation from "../assets/finishAnimation.json";
 import Lottie from "lottie-react";
 import congratsAnimation from "../assets/congratsAnimation.json";
 import owl1 from "../assets/owl-hooting-48028.mp3";
+import thankYou from "../assets/thankYou.mp3";
 
 const Results = ({ questions, answers, onRestart }) => {
   console.log("Questions:", questions);
@@ -42,6 +43,10 @@ const Results = ({ questions, answers, onRestart }) => {
     new Audio(owl1).play();
   };
 
+  const thankYouFin = () => {
+    new Audio(thankYou).play();
+  };
+
   const score = calculateScore();
 
   return (
@@ -72,7 +77,7 @@ const Results = ({ questions, answers, onRestart }) => {
         }}
       ></div>
       <div
-        onClick={playSound}
+        onClick={thankYouFin}
         style={{
           position: "absolute",
           top: "18%",
