@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,600;1,900&display=swap");
+
 .question-container,
 .answers-container {
 	display: flex;
@@ -112,4 +114,36 @@ body {
 	to {
 		transform: rotate(360deg);
 	}
+}
+
+.header-wrapper {
+	display: flex;
+	backdrop-filter: blur(10px);
+	-webkit-backdrop-filter: blur(10px);
+	border: 1px solid rgba(255, 255, 255, 0.3);
+	border-radius: 10px;
+	padding: 20px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+	color: black;
+	margin-top: 30px;
+	background: rgba(255, 255, 255, 0.4);
+	justify-content: space-center;
+}
+
+nav {
+	display: flex;
+	align-items: center;
+}
+
+li {
+	margin-left: 80px;
+	list-style: none;
+}
+
+ul {
+	display: flex;
+	gap: 30px;
+	align-items: center;
+	font-weight: 600;
+	font-family: Poppins;
 }
