@@ -1,7 +1,9 @@
 import React from "react";
 import "./Results.css"; // Import the CSS file
 import { motion } from "framer-motion";
-
+import finishAnimation from "../assets/finishAnimation.json";
+import Lottie from "lottie-react";
+import congratsAnimation from "../assets/congratsAnimation.json";
 const Results = ({ questions, answers, onRestart }) => {
   // Add console logs to check the questions and answers data
   console.log("Questions:", questions);
@@ -40,6 +42,14 @@ const Results = ({ questions, answers, onRestart }) => {
 
   return (
     <div className="results-container">
+      <Lottie
+        animationData={finishAnimation}
+        style={{ width: "400px", position: "absolute", left: "15.5%" }}
+      />
+      {/*  <Lottie
+        animationData={congratsAnimation}
+        style={{ width: "400px", position: "absolute", right: "15.5%" }}
+      /> */}
       <h1>Quiz Finished</h1>
       <div className="score">
         Final Score: {score}/{questions.length}
@@ -72,6 +82,7 @@ const Results = ({ questions, answers, onRestart }) => {
           </motion.div>
         ))}
       </motion.div>
+      <></>
       <button className="restart-button" onClick={onRestart}>
         Restart Quiz
       </button>
