@@ -75,7 +75,6 @@ const Results = ({ questions, answers, onRestart }) => {
           paddingTop: "64px",
           fontSize: "32px",
           display: "hidden",
-          border: "solid 1px red",
         }}
 
       ></div>
@@ -89,8 +88,8 @@ const Results = ({ questions, answers, onRestart }) => {
           padding: "32px",
           paddingTop: "64px",
           fontSize: "26px",
-          border: "solid 1px red",
         }}
+         
       ></div>
       <div
         onClick={simpleThingy1}
@@ -102,7 +101,7 @@ const Results = ({ questions, answers, onRestart }) => {
           zIndex: "1000",
           padding: "32px",
           paddingTop: "64px",
-          border: "solid 1px red",
+        
           fontSize: "26px",
         }}
 
