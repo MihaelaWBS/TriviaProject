@@ -47,14 +47,55 @@ const Results = ({ questions, answers, onRestart }) => {
   return (
     <div className="results-container">
       <Lottie
-        onClick={playSound}
         animationData={finishAnimation}
-        style={{ width: "400px", position: "absolute", left: "15.5%" }}
+        style={{
+          width: "400px",
+          position: "absolute",
+          left: "15.5%",
+        }}
       />
       {/*  <Lottie
         animationData={congratsAnimation}
         style={{ width: "400px", position: "absolute", right: "15.5%" }}
       /> */}
+      <div
+        onClick={playSound}
+        style={{
+          position: "absolute",
+          top: "20%",
+          left: "19.5%",
+          zIndex: "1000",
+
+          padding: "2rem",
+          fontSize: "32px",
+          display: "hidden",
+        }}
+      ></div>
+      <div
+        onClick={playSound}
+        style={{
+          position: "absolute",
+          top: "18%",
+          left: "24%",
+          zIndex: "1000",
+
+          padding: "2rem",
+          fontSize: "26px",
+        }}
+      ></div>
+      <div
+        onClick={playSound}
+        style={{
+          position: "absolute",
+          top: "14%",
+          left: "29%",
+          paddingBottom: "15px",
+          zIndex: "1000",
+
+          padding: "2rem",
+          fontSize: "26px",
+        }}
+      ></div>
       <h1>Quiz Finished</h1>
       <div className="score">
         Final Score: {score}/{questions.length}
