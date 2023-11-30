@@ -128,7 +128,7 @@ body {
 	transform: translateY(6px);
 }
 
-.restart-quiz-button-timer {
+.timer-button {
 	margin-left: 20px;
 	cursor: pointer;
 	margin-top: 20px;
@@ -141,4 +141,12 @@ body {
 	color: black;
 	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 	transition: box-shadow 0.2s, transform 0.2s;
+}
+
+.timer-hidden {
+	background: red;
+}
+
+.restart-quiz-button-timer-hidden {
+	display: none;
 }

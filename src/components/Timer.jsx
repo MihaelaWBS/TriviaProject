@@ -1,8 +1,8 @@
 import React from "react";
 import { useState, useRef, useEffect } from "react";
 
-export default function Timer() {
-	const [time, setTime] = useState(60);
+export default function Timer({ onTimeUp }) {
+	const [time, setTime] = useState(15);
 	const [running, setRunning] = useState(true);
 
 	const timer = useRef();
@@ -10,11 +10,28 @@ export default function Timer() {
 	useEffect(() => {
 		if (running) {
 			timer.current = setInterval(() => {
-				setTime((pre) => pre - 1);
+				setTime((prevTime) => {
+					if (prevTime === 1) {
+						// Time is up
+						clearInterval(timer.current);
+						onTimeUp(); // Call the function to reset the quiz
+						location.reload();
+					}
+					return prevTime - 1;
+				});
 			}, 1000);
 		}
 		return () => clearInterval(timer.current);
-	}, [running]);
+	}, [running, onTimeUp]);
+
+	/*
+	if (time === ) {
+		alert("Your time is over!!!");
+
+		//setTime(0)
+	} else {
+		
+	} */
 
 	return (
 		<div className="stopwatch">

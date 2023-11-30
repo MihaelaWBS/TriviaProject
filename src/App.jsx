@@ -19,6 +19,15 @@ function App() {
 	const [spiderAnswer, setspiderAnswer] = useState(false);
 	const [setspiderGone, setSpiderGone] = useState(false);
 
+
+
+
+
+
+
+
+	
+
 	const handleResults = () => {
 		setShowResults(true);
 	};
@@ -36,6 +45,12 @@ function App() {
 
 	const goToPreviousQuestion = () => {
 		setCurrentQuestionIndex(currentQuestionIndex - 1);
+	};
+
+	const resetQuiz = () => {
+		// logic to reset the quiz
+		alert("Your time is up! The quiz will restart.");
+		// reset your quiz state here
 	};
 
 	useEffect(() => {
@@ -155,8 +170,8 @@ function App() {
 							current={currentQuestionIndex}
 							total={quizQuestions.length}
 						/>
-						<button className="restart-quiz-button-timer">
-							<Timer />
+						<button className="timer-button">
+							<Timer onTimeUp={resetQuiz} />
 						</button>
 					</>
 				)}
