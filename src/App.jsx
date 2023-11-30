@@ -1,12 +1,14 @@
 import { useState, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-
+import he from "he";
 import Questions from "./components/Questions";
 import "./App.css";
+import ProgressBar from "./components/ProgressBar";
 
 import Results from "./components/Results";
 import { v4 as uuidv4 } from "uuid";
 import Loader from "./components/Loader";
+import Timer from "./components/Timer";
 
 function App() {
 	const [quizQuestions, setQuizQuestions] = useState([]);
@@ -48,7 +50,14 @@ function App() {
 					...item,
 					id: uuidv4(),
 					question: unEscape(item.question),
-					answers: shuffleAnswers(item.correct_answer, item.incorrect_answers),
+					correct_answer: unEscape(item.correct_answer),
+					incorrect_answers: item.incorrect_answers.map((answer) =>
+						unEscape(answer)
+					),
+					answers: shuffleAnswers(
+						unEscape(item.correct_answer),
+						item.incorrect_answers.map((answer) => unEscape(answer))
+					),
 				}));
 				setQuizQuestions(processedQuestions);
 				localStorage.setItem(
@@ -59,7 +68,6 @@ function App() {
 				console.error("Error fetching quiz data:", error);
 			}
 		};
-
 		const storedQuestions = localStorage.getItem("quizQuestions");
 		const storedAnswers = localStorage.getItem("selectedAnswers");
 
@@ -86,7 +94,6 @@ function App() {
 
 	const restartQuiz = () => {
 		location.reload();
-
 	};
 
 	if (quizOver) {
@@ -144,6 +151,13 @@ function App() {
 						<button className="restart-quiz-button" onClick={restartQuiz}>
 							RESTART QUIZ 🤯
 						</button>
+						<ProgressBar
+							current={currentQuestionIndex}
+							total={quizQuestions.length}
+						/>
+						<button className="restart-quiz-button-timer">
+							<Timer />
+						</button>
 					</>
 				)}
 		</main>
@@ -162,12 +176,7 @@ const shuffleAnswers = (correctAnswer, incorrectAnswers) => {
 };
 
 function unEscape(htmlStr) {
-	htmlStr = htmlStr.replace(/&lt;/g, "<");
-	htmlStr = htmlStr.replace(/&gt;/g, ">");
-	htmlStr = htmlStr.replace(/&quot;/g, '"');
-	htmlStr = htmlStr.replace(/&#039;/g, "'");
-	htmlStr = htmlStr.replace(/&amp;/g, "&");
-	return htmlStr;
+	return he.decode(htmlStr);
 }
 
 export default App;
