@@ -19,14 +19,14 @@ function App() {
 	const [spiderAnswer, setspiderAnswer] = useState(false);
 	const [setspiderGone, setSpiderGone] = useState(false);
 
-
-
-
-
-
-
-
-	
+	const [buttonClass, setButtonClass] = useState("timer-button");
+	const handleTimerChange = (time) => {
+		if (time < 10) {
+			setButtonClass("restart-quiz-button-timer-10");
+		} else {
+			setButtonClass("timer-button");
+		}
+	};
 
 	const handleResults = () => {
 		setShowResults(true);
@@ -170,8 +170,8 @@ function App() {
 							current={currentQuestionIndex}
 							total={quizQuestions.length}
 						/>
-						<button className="timer-button">
-							<Timer onTimeUp={resetQuiz} />
+						<button className={buttonClass}>
+							<Timer onTimeChange={handleTimerChange} />
 						</button>
 					</>
 				)}

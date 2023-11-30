@@ -1,8 +1,8 @@
 import React from "react";
 import { useState, useRef, useEffect } from "react";
 
-export default function Timer({ onTimeUp }) {
-	const [time, setTime] = useState(15);
+export default function Timer({ onTimeChange }) {
+	const [time, setTime] = useState(120);
 	const [running, setRunning] = useState(true);
 
 	const timer = useRef();
@@ -11,27 +11,19 @@ export default function Timer({ onTimeUp }) {
 		if (running) {
 			timer.current = setInterval(() => {
 				setTime((prevTime) => {
-					if (prevTime === 1) {
-						// Time is up
-						clearInterval(timer.current);
-						onTimeUp(); // Call the function to reset the quiz
-						location.reload();
-					}
-					return prevTime - 1;
+					const newTime = prevTime - 1;
+					onTimeChange(newTime);
+					return newTime;
 				});
 			}, 1000);
 		}
 		return () => clearInterval(timer.current);
-	}, [running, onTimeUp]);
+	}, [running, onTimeChange]);
 
-	/*
-	if (time === ) {
+	if (time === 0) {
 		alert("Your time is over!!!");
-
-		//setTime(0)
-	} else {
-		
-	} */
+		location.reload();
+	}
 
 	return (
 		<div className="stopwatch">
@@ -51,8 +43,3 @@ const format = (time) => {
 
 	return hours + ":" + minutes + ":" + seconds;
 };
-
-/*
-const start = () => {
-    setRunning(true)
-} */
