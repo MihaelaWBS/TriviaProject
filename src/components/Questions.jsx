@@ -52,10 +52,10 @@ const Questions = ({
         <AnimatePresence>
           <motion.div
             key={quizQuestions.id}
-            initial={{ opacity: 0 }}
+            initial={{ opacity: -100 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 1.5 }}
             className="question-container"
           >
             {quizQuestions.question}
